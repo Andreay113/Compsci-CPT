@@ -1,0 +1,106 @@
+#Level 1 (Tiffany): Plant tree
+# - Character moves left and right
+# - When the character is on the squares (soil) and the user presses the space bar, they plant a seed in the soil
+# - Once all 6 seeds are planted, it rains from the clouds (using functions and lists)?? and the sun goes around like once??
+# - The player moves onto the next level
+
+# Used pygame template
+# TEMPLATE FOR ARROW KEYS FROM (Edited)
+#https://www.geeksforgeeks.org/python-moving-an-object-in-pygame/
+
+import pygame 
+
+pygame.init()
+
+WIDTH = 640
+HEIGHT = 480
+SIZE = (WIDTH, HEIGHT)
+
+screen = pygame.display.set_mode(SIZE)
+clock = pygame.time.Clock()
+
+# ---------------------------
+# Initialize global variables
+
+character_x = 30
+character_y = 340
+
+cloud_x = 0
+cloud_y = 50
+
+# velocity / speed of movement
+vel = 3
+
+# ---------------------------
+
+running = True
+while running:
+    # EVENT HANDLING
+    # creates time delay of 10ms 
+    pygame.time.delay(10)
+       
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+               
+            run = False
+
+    keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_LEFT] and character_x>0:
+        character_x -= vel
+
+    if keys[pygame.K_RIGHT] and character_x<640-40:
+        character_x += vel
+
+    # GAME STATE UPDATES
+
+    cloud_x += 1
+    if cloud_x > WIDTH:
+        cloud_x = 0
+    
+    # All game math and comparisons happen here
+
+    #MAKE CLOUDS USING FUCTIONS (And possibly rain using lists?)
+
+    # DRAWING
+    screen.fill((161, 220, 233))
+
+    # GROUND
+    pygame.draw.rect(screen, (0, 158, 96), (0, HEIGHT-160, WIDTH, 160))
+    pygame.draw.rect(screen, (92, 64, 51), [0, 350, 800, 200])
+    pygame.draw.rect(screen, (36, 37, 38), [0, 350, 800, 8])
+
+    #Cloud
+    cloud_color = (240, 240, 240)
+    
+    pygame.draw.rect(screen, cloud_color, [cloud_x, cloud_y, 40, 40])
+    pygame.draw.rect(screen, cloud_color, [cloud_x + 17, cloud_y - 20, 40, 40])
+    pygame.draw.rect(screen, cloud_color, [cloud_x + 33, cloud_y, 40, 40])
+    
+    #Soil
+    pygame.draw.rect(screen, (53, 33, 0), [127, 400, 40, 40])
+    pygame.draw.rect(screen, (53, 33, 0), [207, 400, 40, 40])
+    pygame.draw.rect(screen, (53, 33, 0), [287, 400, 40, 40])
+    pygame.draw.rect(screen, (53, 33, 0), [367, 400, 40, 40])
+    pygame.draw.rect(screen, (53, 33, 0), [447, 400, 40, 40])
+    pygame.draw.rect(screen, (53, 33, 0), [527, 400, 40, 40])
+
+    # CHARACTER
+    # character_x = 70, character_y = 235
+    # body
+    pygame.draw.rect(screen, (0, 62, 101), (character_x+5, character_y+25, 35, 60))
+    # head
+    pygame.draw.rect(screen, (0, 62, 101), (character_x, character_y, 45, 40))
+    pygame.draw.rect(screen, (224,172,105), (character_x+10, character_y+12, 25, 20))
+    pygame.draw.rect(screen, (0, 101, 62), (character_x+15, character_y+20, 5, 5))
+    pygame.draw.rect(screen, (0, 101, 62), (character_x+28, character_y+20, 5, 5))
+    pygame.draw.rect(screen, (198,134,66), (character_x+15, character_y+28, 15, 2))
+
+    
+    pygame.display.flip()
+    clock.tick(30)
+    #---------------------------
+
+
+pygame.quit()
